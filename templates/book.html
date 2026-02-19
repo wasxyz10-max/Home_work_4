@@ -1,0 +1,44 @@
+<center>
+
+<button><a href="{% url 'books:create_book' %}">Добавить</a></button>
+
+<br><br>
+
+<form action="{% url 'books:search_book' %}" method="GET">
+    <input  type="search" name="s" placeholder="Найти книгу">
+    <button type="submit">Найти</button>
+</form>
+
+<br><br>
+
+{% for i in book %}
+
+<h1>{{ i.title }}</h1>
+<p><a href="{% url 'books:book_detail' i.id %}">Подробнее</a></p>
+<p><a href="{% url 'books:delete_book' i.id %}">Удалить</a></p>
+<p><a href="{% url 'books:update_book' i.id %}">Редактировать</a></p>
+
+{% endfor %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if book.has_previous %}
+            <a href="?page=1">&laquo; Первая</a>
+            <a href="?page={{ book.previous_page_number }}">Предыдущая</a>
+        {% endif %}
+
+        <span class="current">
+            Страница {{ book.number }} из {{ book.paginator.num_pages }}.
+        </span>
+
+        {% if book.has_next %}
+            <a href="?page={{ book.next_page_number }}">Следующая</a>
+            <a href="?page={{ book.paginator.num_pages }}">Последняя &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+</center>
+
+ 
+ 
